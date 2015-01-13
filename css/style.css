@@ -19,21 +19,22 @@ pots {
   text-align: center;
 }
 
-   
+ 
 pots li {
-  position: relative;
+  
   display: inline-block;
   margin-right: -4px;
 }
+
 .pot  {
   display: block;
+  list-style-type: none;
   background-color: #44B78B;
-
+  z-index: 0;
   color: #ffff05;
   margin: 36px;
   width: 44px;
   height: 44px;
-  position: relative;
   text-align: center;
   line-height: 44px;
   border-radius: 50%;
