@@ -5,7 +5,7 @@
 * and away we go
 */
 
-/* acquired this routine from http://web-profile.com.ua/js/dev/randomize-shuffle-an-array/ */
+
 /* so to speak, globals */
 
 var arr_len = 4; // length of input array
@@ -13,7 +13,10 @@ var game_colors = {
   "pot": ["red","blue","green","yellow"],
   "potHex": ["#ff2402",'#0c00ff','#05ff3b', '#ffff05']
   }
+var moves = []
+var results = []
 
+/* acquired this routine from http://web-profile.com.ua/js/dev/randomize-shuffle-an-array/ */
 function random_array( num ) {
     var i, j, tmp,
         raw_array = [];
@@ -42,10 +45,10 @@ function set_active_color(color){
 
 	}
 
-function get_goal(thisOrder) {
+function set_goal(thisOrder) {
         var goal=[];
     for (var i=0;i< arr_len;i++) {
-	    goal.push(game_colors["pot"][thisOrder[i]]);
+		    goal.push(game_colors["pot"][thisOrder[i]]);
 		}
     return goal
 	}	
@@ -53,7 +56,9 @@ function get_goal(thisOrder) {
 
 set_active_color("#f4f4f4");
 
-var theGoal = get_goal(random_array(arr_len));
+var theGoal = set_goal(random_array(arr_len));
+
+document.getElementsByClassName("pot")
 
 
 

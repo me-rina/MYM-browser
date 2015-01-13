@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-
+<head>
   <!-- This tells the browser how to read the document. -->
   <meta charset="utf-8">
 
@@ -9,7 +9,7 @@
 
   <!-- Load the page styles. -->
   <link href="css/style.css" rel="stylesheet" type="text/css">
-
+</head>
   <!--
   jQuery is a common JavaScript library for reading and making changes to the
   Document Object Model (DOM). The DOM is a tree that contains information
@@ -29,8 +29,8 @@
 <!-- 
 <html>
 -->
-<head>
-
+<body>
+<h2 style="text-align: center; background-color:#b56d3d">MindYourMaster</h2>
 <div id="main">
   
 </div>
@@ -48,16 +48,12 @@
 
   </div>
   
-  <canvas id ="activeColor" width="200" height="100" style="border:1px  solid #ffffff; ">
+  <canvas id ="activeColor" width="100" height="100" style="border:1px  solid #000000; ">
   </canvas>
-  <!--
-   <script>
-    var c1 = document.getElementById("activeColor");
-    var ctx = c1.getContext("2d");
-    ctx.fillStyle = "#FF0000";
-    ctx.fillRect(40,4,60,44);
-</script> 
--->
+
+  <div id = "guess">
+  <ul>
+  
 
 <!--  </div>
 -->
@@ -95,9 +91,9 @@
   
  <script src="js/playMYM.js">
  </script>
-<!-- 
+
 </body>
--->
-</head>
+
+
 
 </html>
