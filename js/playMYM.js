@@ -39,7 +39,7 @@ function set_active_color(color){
     ctx.fillStyle = color;
     ctx.fillRect(40,4,40,40);
 	ctx.strokeRect(38,2,44,44);
-	
+
 	}
 
 function get_goal(thisOrder) {
@@ -51,7 +51,7 @@ function get_goal(thisOrder) {
 	}	
 /* __mainloop__ */
 
-set_active_color("#ff0000");
+set_active_color("#f4f4f4");
 
 var theGoal = get_goal(random_array(arr_len));
 
