@@ -11,15 +11,20 @@
 var num_pegs = 4; // length of input array
 var num_guesses = num_pegs * 3
 var game_colors = {
-  "pot": ["red","blue","green","yellow"],
-  "potHex": ["#ff2402",'#0c00ff','#05ff3b', '#ffff05']
+  "potHuman": {"#ff2402":"red","#0c00ff":"blue","#05ff3b":"green","#ffff05":"yellow"},
+
+  "potHex": ["#ff2402",'#0c00ff','#05ff3b', '#ffff05'],
+  "rgb2Hex": {  "rgb(255, 255, 5)": "#ffff05", "rgb(5, 255, 59)":"#05ff3b", "rgb(12, 0, 255)":"#9c99ff", "rgb(255, 36, 2)":"#ff2492"}
   }
-var color_key ={"r": "red","b": "blue","g": "green","y": "yellow"}
+/* after all that color shit.......colors are stored in rgb!!!!! */
+
+var color_key ={"r": "#ff2402","b": "#0c00ff","g": "#05ff3b","y": "#ffff05"}
 
 var game_state = {"w": "YOU WIN!", "l": "YOU LOSE!"}
 
 var moves = []
 var results = []
+var active_color="#f4f4f4"
 
 /* acquired this routine from http://web-profile.com.ua/js/dev/randomize-shuffle-an-array/ */
 function random_array( num ) {
@@ -47,8 +52,17 @@ function set_active_color(color){
     ctx.fillStyle = color;
     ctx.fillRect(36,355,40,40);
 	ctx.strokeRect(34,353,44,44);
+	active_color = color;
 
 	}
+
+function set_button_color(btn) {	
+    document.getElementById(btn).style.backgroundColor=active_color;
+	}
+	
+function erase_button_color(btn) {
+    document.getElementById(btn).style.backgroundColor="#f4f4f4";
+}	
 	
 function declare_game_over(state) {
     var c1 = document.getElementById("playingField");
@@ -64,7 +78,7 @@ function declare_game_over(state) {
 function set_goal(thisOrder) {
         var goal=[];
     for (var i=0;i< num_pegs;i++) {
-		    goal.push(game_colors["pot"][thisOrder[i]]);
+		    goal.push(game_colors["potHex"][thisOrder[i]]);
 		}
     return goal
 	}	
@@ -103,6 +117,14 @@ function make_move(movex) {
 	is_game_over();
 	}
 	
+function build_move() {
+    guess_in_hex=[]
+    for (var i=0;i<num_pegs;i++) {
+	   guess_in_hex.push(game_colors["rgb2Hex"][document.getElementsByClassName("guess")[i].style.backgroundColor]);
+	   }
+	   return guess_in_hex
+	   }
+	
 function is_game_over() {
     if (results[results.length-1].toString() ==	"T,T,T,T" ) {
 	/* you win , print message, end game */
@@ -122,6 +144,17 @@ function str_to_move(str) {
    }
    return newarr
    }
+   
+function goal_human() {
+    var incolor=[];
+	for (var i in theGoal) {
+
+	    incolor.push(game_colors["potHuman"][theGoal[i]])
+		}
+	return incolor
+	}
+	
+	
 
     	
 /* __mainloop__ */
