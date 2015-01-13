@@ -14,7 +14,7 @@ var game_colors = {
   "potHuman": {"#ff2402":"red","#0c00ff":"blue","#05ff3b":"green","#ffff05":"yellow"},
 
   "potHex": ["#ff2402",'#0c00ff','#05ff3b', '#ffff05'],
-  "rgb2Hex": {  "rgb(255, 255, 5)": "#ffff05", "rgb(5, 255, 59)":"#05ff3b", "rgb(12, 0, 255)":"#9c99ff", "rgb(255, 36, 2)":"#ff2492"}
+  "rgb2Hex": {  "rgb(255, 255, 5)": "#ffff05", "rgb(5, 255, 59)":"#05ff3b", "rgb(12, 0, 255)":"#0c00ff", "rgb(255, 36, 2)":"#ff2402"}
   }
 /* after all that color shit.......colors are stored in rgb!!!!! */
 
@@ -45,6 +45,18 @@ function random_array( num ) {
     //document.getElementById('main').innerHTML = 'n = ' + num + '; array = [ ' + raw_array + ' ]';
      return raw_array;
 }
+function draw_board() {
+    var ctx = document.getElementById("playingField").getContext("2d");
+	    for (var i=0;i<num_guesses;i++) {
+		    for (var j=0;j<num_pegs*2;j++) {
+	        ctx.fillStyle = "#b56d3d";
+	        ctx.fillRect((480 + (j*58)),(355 - (i*27)),56,25);
+/*	ctx.fillStyle=results[row][i];
+	ctx.fillRect((720 + (i*58)), (355 - (row*27)),56,25); 
+	*/
+	        }
+	    }
+}
 function set_active_color(color){
 
  var c1 = document.getElementById("playingField");
@@ -55,13 +67,23 @@ function set_active_color(color){
 	active_color = color;
 
 	}
-
+function draw_move(row) {
+    var ctx = document.getElementById("playingField").getContext("2d");
+	for (var i=0;i<num_pegs;i++) {
+	ctx.fillStyle = moves[row][i];
+	ctx.fillRect((480 + (i*58)),(355 - (row*27)),56,25);
+	ctx.fillStyle=results[row][i];
+	ctx.fillRect((712 + (i*58)), (355 - (row*27)),56,25); 
+	}
+}
 function set_button_color(btn) {	
     document.getElementById(btn).style.backgroundColor=active_color;
 	}
 	
-function erase_button_color(btn) {
-    document.getElementById(btn).style.backgroundColor="#f4f4f4";
+function reset_button_color() {
+    for (var i=0;i<num_pegs;i++) {
+       document.getElementsByClassName("guess")[i].style["cssText"]="";
+    }
 }	
 	
 function declare_game_over(state) {
@@ -93,19 +115,20 @@ function eval_move(movex) {
 	
 	/* check for exact match */
 	for (var i in movex) {
-    	if (movex[i] == theGoal[i]) {this_result.push("T");}
+    	if (movex[i] == theGoal[i]) {this_result.push("black");}
 		else {g_rest.push(theGoal[i]);m_rest.push(movex[i]);}
 	    }
 	
     /* now check for color match 2 loops */	
-	g_rest=g_rest.sort();m_rest=m_rest.sort();
-	for (i in m_rest) {
-	    if (m_rest[i] == g_rest[i]) {this_result.push("t");}
-	    
+
+	for (i in g_rest) {
+	    if (m_rest.indexOf(g_rest[i]) >= 0) {
+		this_result.push("white");m_rest.splice(m_rest.indexOf(g_rest[i]),1)}
+		   
 		   }
     
     
-	for (i = this_result.length;i<num_pegs;i++) {this_result.push("-");}
+	for (i = this_result.length;i<num_pegs;i++) {this_result.push("#f4f4f4");}
 	
 	return this_result
 	
@@ -114,7 +137,9 @@ function eval_move(movex) {
 function make_move(movex) {
     moves.push(movex);
 	results.push(eval_move(movex));
+	draw_move(moves.length-1);
 	is_game_over();
+	reset_button_color();
 	}
 	
 function build_move() {
@@ -126,7 +151,7 @@ function build_move() {
 	   }
 	
 function is_game_over() {
-    if (results[results.length-1].toString() ==	"T,T,T,T" ) {
+    if (results[results.length-1].toString() ==	"black,black,black,black" ) {
 	/* you win , print message, end game */
 	declare_game_over("w");
 	}
@@ -136,7 +161,7 @@ function is_game_over() {
 	}
 }	
 	
-    	
+/* for testing in the console */    	
 function str_to_move(str) {
    var newarr=[];
    for (var i=0;i<str.length;i++) {
@@ -160,10 +185,10 @@ function goal_human() {
 /* __mainloop__ */
 
 set_active_color("#f4f4f4");
-
+draw_board();
 var theGoal = set_goal(random_array(num_pegs));
 
-document.getElementsByClassName("pot")
+document.getElementsByClassName("pot");
 
 
 
