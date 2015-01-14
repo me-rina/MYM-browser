@@ -68,3 +68,15 @@ display: inline;
   width: 44px;
   height: 44px;
 }	
+.submit {
+/* got my triangle (arrow) from http://stackoverflow.com/questions/12041938/how-to-create-a-triangle-in-css3-using-border-radius
+*/
+width: 44px;
+height: 44px;
+background-color: #ffffff;
+border-top: 20px solid transparent;
+border-right: 20px solid transparent;
+border-bottom: 20px solid transparent;
+border-left: 44px solid #990000;
+margin-left: 15px;
+}
