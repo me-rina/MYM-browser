@@ -22,11 +22,13 @@ var color_key ={"r": "#ff2402","b": "#0c00ff","g": "#05ff3b","y": "#ffff05"}
 
 var game_state = {"w": "YOU WIN!", "l": "YOU LOSE!"}
 
+var theGoal=[]
 var moves = []
 var results = []
 var active_color="#f4f4f4"
+
 var boardSpecs = {
-    "startCol": 400,
+    "startCol": 340,
 	"startRow": 32,
 	"slotWidth": 30,
 	"shiftRes": 15,
@@ -52,6 +54,12 @@ function random_array( num ) {
     //document.getElementById('main').innerHTML = 'n = ' + num + '; array = [ ' + raw_array + ' ]';
      return raw_array;
 }
+/* ##############################
+*
+* Drawing "methods"
+*
+* ############################ */
+
 function draw_board() {
     var ctx = document.getElementById("playingField").getContext("2d");
 	/* background a0a0a0 */
@@ -105,18 +113,35 @@ function reset_button_color() {
        document.getElementsByClassName("guess")[i].style["cssText"]="";
     }
 }	
+function reset_game_state() {
+    var ctx = document.getElementById("playingField").getContext("2d");
+    ctx.clearRect(boardSpecs["startCol"]+80,10,120,20);
+}
 	
 function declare_game_over(state) {
     var c1 = document.getElementById("playingField");
     var ctx = c1.getContext("2d");
 	ctx.fillStyle="yellow"
-	ctx.fillRect(480,10,120,20);
+	ctx.fillRect(boardSpecs["startCol"]+80,10,120,20);
 	ctx.font="20px Verdana";
 	ctx.fillStyle="red";
-    ctx.fillText(game_state[state],480,30);
+    ctx.fillText(game_state[state],boardSpecs["startCol"]+80,30);
 	}
+/* #############################################
+*
+*  game "methods", "event handlers"
+*
+* ############################################## */
 
-
+function init_game() {
+    set_active_color("#f4f4f4");
+    draw_board();
+    theGoal = set_goal(random_array(num_pegs));
+	moves = [];
+	results = [];
+	reset_game_state();
+	}
+	
 function set_goal(thisOrder) {
         var goal=[];
     for (var i=0;i< num_pegs;i++) {
@@ -153,16 +178,23 @@ function eval_move(movex) {
 	return this_result
 	
 }
+function is_valid_move(element, index, array) {
+    return element != undefined
+	} 
 
 function make_move(movex) {
-    moves.push(movex);
-	results.push(eval_move(movex));
-	draw_move(moves.length-1);
-	is_game_over();
-	reset_button_color();
+    if (movex.every(is_valid_move)) {
+       moves.push(movex);
+       results.push(eval_move(movex));
+	   draw_move(moves.length-1);
+	   is_game_over();
+	   reset_button_color();
+	}
 	}
 	
 function build_move() {
+/* first validate you have 4 colors (they can all be the same, don't care) */
+
     guess_in_hex=[]
     for (var i=0;i<num_pegs;i++) {
 	   guess_in_hex.push(game_colors["rgb2Hex"][document.getElementsByClassName("guess")[i].style.backgroundColor]);
@@ -181,7 +213,12 @@ function is_game_over() {
 	}
 }	
 	
-/* for testing in the console */    	
+/* ###########################
+*
+* fns for testing in the console
+*
+* ############################## */    	
+
 function str_to_move(str) {
    var newarr=[];
    for (var i=0;i<str.length;i++) {
@@ -199,16 +236,13 @@ function goal_human() {
 	return incolor
 	}
 	
-	
-
     	
+
+
+
+/* document.getElementsByClassName("pot");*/
 /* __mainloop__ */
-
-set_active_color("#f4f4f4");
-draw_board();
-var theGoal = set_goal(random_array(num_pegs));
-
-document.getElementsByClassName("pot");
+init_game()
 
 
 

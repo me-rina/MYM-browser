@@ -31,16 +31,17 @@
 -->
 <body>
 <h2 style="text-align: center; background-color:#b56d3d">MindYourMaster</h2>
-  <canvas id ="playingField" width="1000" height="800" style="border:1px  solid #000000; z-index: -1;position: absolute">
+  <canvas id ="playingField" width="700" height="500" style="position: absolute; z-index: -1">
   </canvas>
 
   
 
 
 
-  <div id="pots">
+  <div id="pots" title="Click a pot to set active color">
      
-  <ul >       
+  <ul >  
+    
     <li><button type="button" class="pot red" onclick=set_active_color("#ff2402")></button></li>
     <li><button type="button" class="pot blue" onclick=set_active_color("#0c00ff")></button></li>
     <li><button type="button" class="pot green" onclick=set_active_color("#05ff3b")></button></li>
@@ -52,13 +53,13 @@
   
 
 
-  <div id = "guesstray" >
+  <div id = "guesstray" title="Click the active color to the guess tray">
   <ul>
     <li><button type="button" class="guess" id="one" onclick=set_button_color("one")></button></li>
     <li><button type="button" class="guess" id="two" onclick=set_button_color("two")></button></li>
     <li><button type="button" class="guess" id="three" onclick=set_button_color("three")></button></li>
     <li><button type="button" class="guess" id="four" onclick=set_button_color("four")></button></li>
-	<li><button type "button" class="greenarrow" id="greenarrow" onclick=make_move(build_move())></button></li>
+	<li><button title="Click to move the answer to the grid" type "button" class="greenarrow" id="greenarrow" onclick=make_move(build_move())></button></li>
   
   </ul>
  </div>
