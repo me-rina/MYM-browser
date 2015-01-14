@@ -9,23 +9,24 @@
 /* so to speak, globals */
 
 var num_pegs = 4; // length of input array
-var num_guesses = num_pegs * 3
+var num_guesses = num_pegs * 3;
 var game_colors = {
   "potHuman": {"#ff2402":"red","#0c00ff":"blue","#05ff3b":"green","#ffff05":"yellow"},
 
   "potHex": ["#ff2402",'#0c00ff','#05ff3b', '#ffff05'],
   "rgb2Hex": {  "rgb(255, 255, 5)": "#ffff05", "rgb(5, 255, 59)":"#05ff3b", "rgb(12, 0, 255)":"#0c00ff", "rgb(255, 36, 2)":"#ff2402"}
-  }
+  };
 /* after all that color shit.......colors are stored in rgb!!!!! */
 
-var color_key ={"r": "#ff2402","b": "#0c00ff","g": "#05ff3b","y": "#ffff05"}
+var color_key ={"r": "#ff2402","b": "#0c00ff","g": "#05ff3b","y": "#ffff05"};
 
-var game_state = {"w": "YOU WIN!", "l": "YOU LOSE!"}
+var game_state = {"w": "YOU WIN!", "l": "YOU LOSE!"};
 
-var theGoal=[]
-var moves = []
-var results = []
-var active_color="#f4f4f4"
+var theGoal=[];
+var moves = [];
+var results = [];
+var blank_color="#f4f4f4";
+var game_is_running = true;
 
 var boardSpecs = {
     "startCol": 340,
@@ -34,6 +35,12 @@ var boardSpecs = {
 	"shiftRes": 15,
 	"startResCol": function() {return boardSpecs["startCol"]+(num_pegs*(boardSpecs["slotWidth"]+2)) + boardSpecs["shiftRes"]}
 	}
+
+/* ################################################
+*
+* helpers
+*
+* ###################################### */	
 
 /* acquired this routine from http://web-profile.com.ua/js/dev/randomize-shuffle-an-array/ */
 function random_array( num ) {
@@ -94,23 +101,27 @@ function draw_move(row) {
 }
 
 function set_active_color(color){
-
- var c1 = document.getElementById("playingField");
-    var ctx = c1.getContext("2d");
-    ctx.fillStyle = color;
-    ctx.fillRect(14,325,30,30);
-	ctx.strokeRect(12,323,34,34);
-	active_color = color;
+    if (game_is_running) {
+ 
+        var ctx = document.getElementById("playingField").getContext("2d");
+        ctx.fillStyle = color;
+        ctx.fillRect(14,325,30,30);
+	    ctx.strokeRect(12,323,34,34);
+	    active_color = color;
 
 	}
+}
 	
-function set_button_color(btn) {	
-    document.getElementById(btn).style.backgroundColor=active_color;
+function set_button_color(btn) {
+
+    if (document.getElementById(btn).style.backgroundColor == "" && active_color != blank_color) {	
+    document.getElementById(btn).style.backgroundColor=active_color;}
+	else {document.getElementById(btn).style.backgroundColor=""}
 	}
 	
-function reset_button_color() {
+function reset_guess_buttons() {
     for (var i=0;i<num_pegs;i++) {
-       document.getElementsByClassName("guess")[i].style["cssText"]="";
+       document.getElementsByClassName("guess")[i].style.backgroundColor="";
     }
 }	
 function reset_game_state() {
@@ -140,6 +151,8 @@ function init_game() {
 	moves = [];
 	results = [];
 	reset_game_state();
+	reset_guess_buttons();
+	game_is_running = true;
 	}
 	
 function set_goal(thisOrder) {
@@ -188,7 +201,8 @@ function make_move(movex) {
        results.push(eval_move(movex));
 	   draw_move(moves.length-1);
 	   is_game_over();
-	   reset_button_color();
+	   reset_guess_buttons();
+	   set_active_color("#f4f4f4");
 	}
 	}
 	
@@ -205,10 +219,10 @@ function build_move() {
 function is_game_over() {
     if (results[results.length-1].toString() ==	"black,black,black,black" ) {
 	/* you win , print message, end game */
-	declare_game_over("w");
+	declare_game_over("w"); set_active_color(blank_color);game_is_running = false;
 	}
 	else {if (results.length == num_guesses) {
-	declare_game_over("l");
+	declare_game_over("l"); set_active_color(blank_color);game_is_running = false;
 	}
 	}
 }	

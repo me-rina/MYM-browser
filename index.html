@@ -34,7 +34,12 @@
   <canvas id ="playingField" width="700" height="500" style="position: absolute; z-index: -1">
   </canvas>
 
-  
+ <div class="menu">
+    <ul>
+    <li><a id="newgame" href="#" title="No Help yet" onclick=init_game();return false;>New Game</a></li>
+    <li><a id="help" href="#">Help</a></li>
+</ul>
+</div>	
 
 
 
@@ -53,13 +58,13 @@
   
 
 
-  <div id = "guesstray" title="Click the active color to the guess tray">
+  <div class = "guesstray" title="Click the active color to the guess tray">
   <ul>
     <li><button type="button" class="guess" id="one" onclick=set_button_color("one")></button></li>
-    <li><button type="button" class="guess" id="two" onclick=set_button_color("two")></button></li>
-    <li><button type="button" class="guess" id="three" onclick=set_button_color("three")></button></li>
-    <li><button type="button" class="guess" id="four" onclick=set_button_color("four")></button></li>
-	<li><button title="Click to move the answer to the grid" type "button" class="greenarrow" id="greenarrow" onclick=make_move(build_move())></button></li>
+    <li><button type="button" class = "guess" id="two"  onclick=set_button_color("two")></button></li>
+    <li><button type="button" class="guess" id="three"  onclick=set_button_color("three")></button></li>
+    <li><button type="button" class = "guess" id="four"  onclick=set_button_color("four")></button></li>
+	<li><button title="Click to move the answer to the grid" type "button"  id="greenarrow" onclick=make_move(build_move())></button></li>
   
   </ul>
  </div>
