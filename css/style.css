@@ -17,26 +17,30 @@
 pots {
   list-style: none;
   text-align: center;
+  margin-top: 36px;
 }
 
- 
+#pots ul {
+   margin-top: 120px;
+}
+
 pots li {
   
   display: inline-block;
-  margin-right: -4px;
+  margin: 8px;
 }
 
 .pot  {
   display: block;
+  margin: 12px;
   list-style-type: none;
   background-color: #44B78B;
   z-index: 0;
   color: #ffff05;
-  margin: 36px;
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   text-align: center;
-  line-height: 44px;
+  line-height: 36px;
   border-radius: 50%;
   box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
 }
@@ -54,7 +58,8 @@ pots li {
 }	
 
 #guesstray ul {
-margin-left: 138px;
+margin-left: 68px;
+margin-top: 32px;
 }
 
 #guesstray li {
@@ -65,18 +70,18 @@ display: inline;
 
 display: inline;
   /*margin: 36px;*/
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
 }	
-.submit {
+.greenarrow {
 /* got my triangle (arrow) from http://stackoverflow.com/questions/12041938/how-to-create-a-triangle-in-css3-using-border-radius
 */
-width: 44px;
-height: 44px;
+width: 36px;
+height: 36px;
 background-color: #ffffff;
-border-top: 20px solid transparent;
-border-right: 20px solid transparent;
-border-bottom: 20px solid transparent;
-border-left: 44px solid #990000;
+border-top: 16px solid transparent;
+border-right: 16px solid transparent;
+border-bottom: 16px solid transparent;
+border-left: 36px solid #278c1f;
 margin-left: 15px;
 }

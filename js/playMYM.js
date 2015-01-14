@@ -25,6 +25,13 @@ var game_state = {"w": "YOU WIN!", "l": "YOU LOSE!"}
 var moves = []
 var results = []
 var active_color="#f4f4f4"
+var boardSpecs = {
+    "startCol": 400,
+	"startRow": 32,
+	"slotWidth": 30,
+	"shiftRes": 15,
+	"startResCol": function() {return boardSpecs["startCol"]+(num_pegs*(boardSpecs["slotWidth"]+2)) + boardSpecs["shiftRes"]}
+	}
 
 /* acquired this routine from http://web-profile.com.ua/js/dev/randomize-shuffle-an-array/ */
 function random_array( num ) {
@@ -47,35 +54,48 @@ function random_array( num ) {
 }
 function draw_board() {
     var ctx = document.getElementById("playingField").getContext("2d");
+	/* background a0a0a0 */
+	ctx.fillStyle="#a0a0a0";
+	ctx.fillRect(boardSpecs["startCol"],boardSpecs["startRow"], boardSpecs["shiftRes"] + (num_pegs * 2) * ((boardSpecs["slotWidth"]+2)),num_guesses*32 )
+	
+	/* i = rows, posy; j=cols, posx */
+	    
 	    for (var i=0;i<num_guesses;i++) {
-		    for (var j=0;j<num_pegs*2;j++) {
+		    for (var j=0;j<num_pegs;j++) {
 	        ctx.fillStyle = "#b56d3d";
-	        ctx.fillRect((480 + (j*58)),(355 - (i*27)),56,25);
-/*	ctx.fillStyle=results[row][i];
-	ctx.fillRect((720 + (i*58)), (355 - (row*27)),56,25); 
-	*/
+	       	ctx.fillRect(boardSpecs["startCol"] + (j*(boardSpecs["slotWidth"]+2)),(385 - (i*32)),boardSpecs["slotWidth"],30);
+         }	
+		 
+		for (var j=0;j<num_pegs;j++) {
+	        ctx.fillStyle = "#b56d3d";
+        	ctx.fillRect(boardSpecs.startResCol() + (j*(boardSpecs["slotWidth"]+2)),(385 - (i*32)),boardSpecs["slotWidth"],30);		
 	        }
-	    }
+	    
+		}
 }
+
+function draw_move(row) {
+    var ctx = document.getElementById("playingField").getContext("2d");
+	/* row = rows , posy; j = cols, posx */
+	for (var j=0;j<num_pegs;j++) {
+	ctx.fillStyle = moves[row][j];
+	ctx.fillRect(boardSpecs["startCol"] + (j*(boardSpecs["slotWidth"]+2)),(385 - (row*32)),boardSpecs["slotWidth"],30);
+	ctx.fillStyle=results[row][j];
+	ctx.fillRect(boardSpecs.startResCol() + (j*(boardSpecs["slotWidth"]+2)), (385 - (row*32)),boardSpecs["slotWidth"],30); 
+	}
+}
+
 function set_active_color(color){
 
  var c1 = document.getElementById("playingField");
     var ctx = c1.getContext("2d");
     ctx.fillStyle = color;
-    ctx.fillRect(36,355,40,40);
-	ctx.strokeRect(34,353,44,44);
+    ctx.fillRect(14,325,30,30);
+	ctx.strokeRect(12,323,34,34);
 	active_color = color;
 
 	}
-function draw_move(row) {
-    var ctx = document.getElementById("playingField").getContext("2d");
-	for (var i=0;i<num_pegs;i++) {
-	ctx.fillStyle = moves[row][i];
-	ctx.fillRect((480 + (i*58)),(355 - (row*27)),56,25);
-	ctx.fillStyle=results[row][i];
-	ctx.fillRect((712 + (i*58)), (355 - (row*27)),56,25); 
-	}
-}
+	
 function set_button_color(btn) {	
     document.getElementById(btn).style.backgroundColor=active_color;
 	}
@@ -90,10 +110,10 @@ function declare_game_over(state) {
     var c1 = document.getElementById("playingField");
     var ctx = c1.getContext("2d");
 	ctx.fillStyle="yellow"
-	ctx.fillRect(480,30,120,20);
+	ctx.fillRect(480,10,120,20);
 	ctx.font="20px Verdana";
 	ctx.fillStyle="red";
-    ctx.fillText(game_state[state],480,50);
+    ctx.fillText(game_state[state],480,30);
 	}
 
 
@@ -128,7 +148,7 @@ function eval_move(movex) {
 		   }
     
     
-	for (i = this_result.length;i<num_pegs;i++) {this_result.push("#f4f4f4");}
+	for (i = this_result.length;i<num_pegs;i++) {this_result.push("#b56d3d");}
 	
 	return this_result
 	
