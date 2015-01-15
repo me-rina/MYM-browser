@@ -6,7 +6,12 @@
 */
 
 
-/* so to speak, globals */
+/* ###################################
+*
+*  so to speak, globals 
+*
+* ####################################
+*/
 
 var num_pegs = 4; // length of input array
 var num_guesses = num_pegs * 3;
@@ -21,7 +26,7 @@ var game_colors = {
 var color_key ={"r": "#ff2402","b": "#0c00ff","g": "#05ff3b","y": "#ffff05"};
 
 var game_state = {"w": "YOU WIN!", "l": "YOU LOSE!"};
-
+var toggle_vis = {"hidden": "visible", "visible": "hidden"};
 var theGoal=[];
 var moves = [];
 var results = [];
@@ -138,6 +143,19 @@ function declare_game_over(state) {
 	ctx.fillStyle="red";
     ctx.fillText(game_state[state],boardSpecs["startCol"]+80,30);
 	}
+	
+function show_help() {
+/* hardest method yet intention: modify the DOM to make the help div visible */	
+    document.getElementById("helpdoc").style["visibility"]="visible";
+	}
+function hide_help() {
+    document.getElementById("helpdoc").style["visibility"]="hidden";
+}
+function toggle_help() {
+   var switch_vis=toggle_vis[document.getElementById("helpdoc").style["visibility"]];
+   document.getElementById("helpdoc").style["visibility"]=switch_vis;
+   }
+
 /* #############################################
 *
 *  game "methods", "event handlers"
@@ -250,11 +268,7 @@ function goal_human() {
 	return incolor
 	}
 	
-    	
 
-
-
-/* document.getElementsByClassName("pot");*/
 /* __mainloop__ */
 init_game()
 

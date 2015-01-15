@@ -1,34 +1,16 @@
 <!DOCTYPE html>
 
 <head>
-  <!-- This tells the browser how to read the document. -->
+
   <meta charset="utf-8">
 
-  <!-- Tells the browser what the title of this page should be. -->
+
   <title>MYM-browser</title>
 
-  <!-- Load the page styles. -->
+ 
   <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-  <!--
-  jQuery is a common JavaScript library for reading and making changes to the
-  Document Object Model (DOM). The DOM is a tree that contains information
-  about what is actually visible on a website.
-
-  While HTML is a static document, the browser converts HTML to the
-  DOM and the DOM can change. In fact, JavaScript's power comes from
-  its ability to manipulate the DOM, which is essentially a JavaScript
-  object. When JavaScript makes something interesting happen on a
-  website, it's likely the action happened because JavaScript changed
-  the DOM. jQuery is fast and easy to use, but it doesn't do anything
-  you can't accomplish with vanilla (regular) JavaScript.
-  -->
-
-
-
-<!-- 
-<html>
--->
+ 
 <body>
 <h2 style="text-align: center; background-color:#b56d3d">MindYourMaster</h2>
   <canvas id ="playingField" width="700" height="500" style="position: absolute; z-index: -1">
@@ -36,14 +18,31 @@
 
  <div class="menu">
     <ul>
-    <li><a id="newgame" href="#" title="No Help yet" onclick=init_game();return false;>New Game</a></li>
-    <li><a id="help" href="#">Help</a></li>
+    <li><p id="newgame"  onclick=init_game();return false;>New Game</p></li>
+    <li><p id="helpButton" title="No Help yet" onclick=toggle_help() >Help</p></li>
+
 </ul>
 </div>	
 
 
+<div class="helpdoc">
 
-  <div id="pots" title="Click a pot to set active color">
+  <p id="helpdoc" onclick=toggle_help() style="visibility: hidden;background-color: #f4f4f4;">
+  Click on a color pot to set active color.<br>
+  Click on the guess tray to place active color.<br>
+  (Another click will clear the slot).<br>
+  Click on the green arrow to guess.<br>
+  Black "peg" displays for color in the correct position.<br>
+  White "peg" displays for color in the wrong position.<br>
+  New Game will start again.<br><br>
+  Click to close.
+  
+  </p>
+
+  </div>
+
+
+  <div id="pots" >
      
   <ul >  
     
@@ -58,7 +57,7 @@
   
 
 
-  <div class = "guesstray" title="Click the active color to the guess tray">
+  <div class = "guesstray" >
   <ul>
     <li><button type="button" class="guess" id="one" onclick=set_button_color("one")></button></li>
     <li><button type="button" class = "guess" id="two"  onclick=set_button_color("two")></button></li>
@@ -68,33 +67,10 @@
   
   </ul>
  </div>
-<!--  </div>
--->
 
-
-
-  <!--
-  These scripts are written in JavaScript. You'll be breaking them down as part of
-  a quiz. Essentially, the next few lines are checking to see if you have not
-  changed each section of the resume. If you have not made any changes to a section
-  of the resume, then that part of the resume does not show up. More on this in the
-  course.
-  -->
 
   <script type="text/javascript">
-    // Notice how all of a sudden there's JavaScript inside this HTML
-    // document? You can write JavaScript between <script> tags. At the end of your
-    // JavaScript, don't forget the closing script tag with the slash (/).
-
-
-    // Also, this is a JavaScript style comment. You can comment in JavaScript with:
-
-    //   two slashes for all following characters on a single line, or
-
-    /*
-        an opening and closing set of slash asterisks for block comments.
-    */
-
+ 
 
   
     if(document.getElementById('pots') === null) {
@@ -106,7 +82,5 @@
  </script>
 
 </body>
-
-
 
 </html>
